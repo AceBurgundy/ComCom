@@ -1,0 +1,71 @@
+#delete-account-form {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 250%);
+    background-color: var(--background);
+    border: 2px solid var(--accent);
+    z-index: 3;
+    width: 550px;
+    display: flex;
+    flex-direction: column;
+    transition: 250ms ease;
+    padding: 1.5rem;
+    gap: 2rem;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#delete-account-form.active {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    pointer-events: all;
+}
+
+#delete-account-form__bottom {
+    display: flex;
+    flex-direction: column;
+}
+
+#delete-account-form__bottom-input-container {
+    background-color: var(--input-background);
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+#delete-account-password-input {
+    border: none;
+    width: 80%;
+    padding: 1rem;
+    background-color: inherit;
+    color: var(--text);
+}
+
+#delete-verify-eyes-icon-container {
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+#delete-verify-eye {
+    display: none;
+}
+
+#delete-account-form__bottom-input-container__buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#delete-account-cancel {
+    cursor: pointer;
+}
+
+@media screen and (orientation: portrait) {
+    #delete-account-form {
+        width: 95%;
+        margin: 0 auto;
+    }
+}

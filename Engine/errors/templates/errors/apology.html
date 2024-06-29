@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<html lang="en" class="{% if current_user -%}
+                            {% if current_user.night_mode == True -%}
+                                night
+                            {%- else -%}
+                                day
+                            {%- endif %}
+                        {%- else -%}
+                        night
+                        {%- endif %}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, width=device-width">
+    <link rel="stylesheet" href="{{ url_for ('errors.static' , filename='errors.css') }}">
+    <script src="{{ url_for ('errors.static' , filename='error.js') }}" defer></script>
+    <script src="static/fittext.js"></script>
+</head>
+
+<body>
+    <main>
+        <div id="main-container">
+            <div id="main-errors">
+                <div id="error-title">{{ title }}</div>
+                <p id="error-message">{{ message }}</p>
+                <button id="return-button" onclick="window.history.back();">Go Back</button>
+            </div>
+        </div>
+        <div id="error-code-container">
+            <p id="error-number">{{ code }}</p>
+        </div>
+    </main>
+</body>
+
+</html>

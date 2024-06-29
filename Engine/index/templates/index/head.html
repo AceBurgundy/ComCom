@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class="night">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% if title -%}
+        {% block title -%}{%- endblock %}
+        {%- else -%}
+        Huddle
+        {%- endif %}
+    </title>
+
+    <meta name="description" content="Huddle - Light communication. Fast communication, Clear communication">
+    <meta name="keywords" content="Huddle, community, sharing, discussion">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="canonical" href="https://www.zemho.pythonanywhere.com">
+
+    <!-- Open Graph meta tags -->
+    <meta property="og:title" content="Huddle">
+    <meta property="og:description" content="Light communication. Fast communication, Clear communication">
+    <!-- <meta property="og:image" content="https://www.huddle.com/images/og-image.jpg"> -->
+    <meta property="og:url" content="https://www.zemho.pythonanywhere.com">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Huddle">
+    <meta name="twitter:description" content="Light communication. Fast communication, Clear communication">
+    <!-- <meta name="twitter:image" content="https://www.huddle.com/images/twitter-card-image.jpg"> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.3/socket.io.js"
+        integrity="sha512-jDUVpk2awjMnyrpY2xZguylQVRDeS9kRBImn0M3NJaZzowzUpKr6i62ynwPG0vNS1+NsTk4ji+iznbc5m0ZCKQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="{{ url_for('index.static', filename='head.js') }}" type="module"></script>
+    <script src="{{ url_for('index.static', filename='create_room.js') }}" type="module"></script>
+    <script src="{{ url_for('index.static', filename='form_toggles.js') }}" type="module"></script>
+    <script src="{{ url_for('index.static', filename='join_room.js') }}" type="module"></script>
+    <script src="{{ url_for('index.static', filename='night_mode_toggle.js') }}" type="module"></script>
+    <script src="{{ url_for('index.static', filename='notification.js') }}" type="module"></script>
+    <script src="{{ url_for('index.static', filename='socket.js') }}" type="module"></script>
+    <script src="{{ url_for('index.static', filename='room.js') }}" type="module"></script>
+
+    {% block script -%}{%- endblock script %}
+    {% block component_script -%}{%- endblock component_script %}
+
+    <link rel="stylesheet" href="{{ url_for('index.static', filename='head.css') }}">
+
+    {% block style -%}{%- endblock style %}
+    {% block component_style -%}{%- endblock component_style %}
+
+    {% with messages=get_flashed_messages() -%}
+    <ul class="flashes">
+        {% if messages -%}
+            {% for message in messages -%}
+                <li class="message">{{ message }}</li>
+            {%- endfor %}
+        {%- else -%}
+            <li class="message">{{ message }}</li>
+        {%- endif %}
+    </ul>
+    {%- endwith %}
+</head>
+
+<body>
+    <script>0</script>
+    <div id="form-background"></div>
+    {% block login -%}{%- endblock login %}
+    {% block register -%}{%- endblock register %}
+    {% block main -%}{%- endblock main %}
+    {% block profile -%}{%- endblock profile %}
+    {% block new_project -%}{%- endblock new_project %}
+</body>

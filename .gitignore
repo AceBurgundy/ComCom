@@ -1,0 +1,6 @@
+__pycache__
+env
+.mypy_cache
+.vscode
+instance
+node_modules

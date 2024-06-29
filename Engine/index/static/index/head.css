@@ -1,0 +1,35 @@
+.flashes,
+.error-list {
+    position: fixed;
+    left: 0%;
+    bottom: 0%;
+    max-width: max-content;
+    z-index: 10;
+    margin: 1em;
+    background-color: #00000000;
+    pointer-events: none;
+}
+
+.message,
+.error {
+    padding: 0.5em 1.2em;
+    font-size: 0.9rem;
+    margin-bottom: 0.5em;
+    border: none;
+    width: fit-content;
+    border-radius: 15px;
+    list-style: none;
+    opacity: 0;
+    position: relative;
+    z-index: 10;
+    color: black;
+    transition: 500ms;
+    background-color: var(--primary);
+    pointer-events: none;
+}
+
+.message.active,
+.error.active {
+    margin-left: 1.1em;
+    opacity: 1;
+}

@@ -1,0 +1,85 @@
+{% extends 'layout.html' %}
+
+{% block component_style -%}
+    <link rel="stylesheet" href="{{ url_for( 'profile.static' , filename='profile.css')  }}">
+{% endblock component_style %}
+
+<!-- {# scripts #} -->
+{% block component_script -%}
+    <script src="{{ url_for( 'profile.static' , filename='profile.js')  }}" type="module"></script>
+    <script src="{{ url_for( 'profile.static' , filename='delete_account_form.js')  }}" type="module"></script>
+    <script src="{{ url_for( 'profile.static' , filename='new_password.js')  }}" type="module"></script>
+{%- endblock component_script %}
+
+{% block user -%}
+
+    {% if current_user.is_authenticated -%}
+
+        {% if form.errors %}
+        <ul class="error-list">
+            {% for field_name,field_errors in form.errors|dictsort if field_errors %} {% for error in field_errors %}
+            <div class="error">{{ field_name }} {{ error }}</div>
+            {% endfor %} {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% include 'newPassword.html' %}
+        {% include 'deleteAccount.html' %}
+
+        <div id="profile-section">
+            <form action="{{ url_for('profile.post_profile') }}" method="post" id="profile-main" enctype="multipart/form-data">
+
+                {{ form.csrf_token }}
+
+                <div id="profile-top">
+
+
+                    <div id="profile-top-controls" data-user-id="{{user_id}}" data-current-user-id="{{current_user.id}}">
+
+                        {% if current_user.id == user_id %}
+                            {{ form.submit(class="button form-save-button", id="top-save-button") }}
+                        {%- endif %}
+
+                        {% if current_user.id == user_id %}
+                            <div id="edit-button" class="button">Edit</div>
+                        {%- endif %}
+
+                    </div>
+
+                    <!-- Profile Picture Container -->
+                    <div id="profile-username-container">
+                        <div id="profile-picture-container">
+                            {% if current_user.id == user_id %}
+                                {{ form.profile_picture(readonly=True) }}
+                            {%- endif %}
+                            <img src="{{ user_image }}" id="actual_picture" alt="">
+                            <div id="camera-icon-container">
+                                <svg id="camera-icon" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 32 32" viewBox="0 0 32 32"><path d="M28,7.65997h-4.41998c-0.17999,0-0.35004-0.09998-0.44-0.25995l-1.22003-2.22003c-0.62-1.12-1.78998-1.81-3.07001-1.81h-5.69995c-1.28003,0-2.45001,0.69-3.07001,1.81L8.85999,7.40002C8.77002,7.56,8.59998,7.65997,8.41998,7.65997H4c-1.92999,0-3.5,1.57001-3.5,3.5V25.13c0,1.92999,1.57001,3.5,3.5,3.5h24c1.92999,0,3.5-1.57001,3.5-3.5V11.15997C31.5,9.22998,29.92999,7.65997,28,7.65997z M16,24.64001c-3.58002,0-6.5-2.91003-6.5-6.5c0-3.58002,2.91998-6.5,6.5-6.5s6.5,2.91998,6.5,6.5C22.5,21.72998,19.58002,24.64001,16,24.64001z"/><circle cx="16" cy="18.14" r="3.5"/></svg>
+                            </div>
+                        </div>
+
+                        <div id="username-container">
+
+                            <div>
+                                <h1>Username</h1>
+                                {{ form.username(readonly=True) }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Bottom Section -->
+                {% if current_user.id == user_id %}
+                    <div id="profile-bottom">
+                            {{ form.submit(class="button form-save-button", id="bottom-save-button") }}
+                    </div>
+                {%- endif %}
+            </form>
+        </div>
+
+    {%- endif %}
+
+{%- endblock user %}

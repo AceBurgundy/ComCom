@@ -1,0 +1,19 @@
+<div id="room-options">
+
+    <button id="room-options-new">
+        <p>New Group</p>
+        <svg id="plus-icon" class="icon" viewBox="0 0 24 24">
+            <path d="M19,11H13V5a1,1,0,0,0-2,0v6H5a1,1,0,0,0,0,2h6v6a1,1,0,0,0,2,0V13h6a1,1,0,0,0,0-2Z"></path>
+        </svg>
+    </button>
+
+    <form id="room-options-join" enctype="multipart/form-data">
+
+        {{ join_room_form.csrf_token }}
+        {{ join_room_form.code(placeholder="Enter room code") }}
+
+        <button id="room-options-join-submit" type="submit">
+            <p>Join</p>
+        </button>
+    </form>
+</div>

@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block component_style -%}
+    <link rel="stylesheet" href="{{ url_for('index.static', filename='about.css') }}">
+{% endblock component_style %}
+
+{% block about -%}
+
+    <div id="about">
+        <h1 id="about__title">Introducing <a href="/">Huddle</a>: Where Ideas Ignite and Communities Thrive</h1>
+        <p class="about__paragraph">
+            Huddle is an innovative web app that revolutionizes presentations, bringing together presenters and audiences seamlessly. Instead of relying on video streaming, Huddle utilizes a unique approach, empowering presenters to share presentation files directly with the audience's devices. By downloading the presentation files, audience members can follow along effortlessly, synchronized with the presenter's progress.
+        </p>
+        <p class="about__paragraph">
+            With Huddle, presentations become dynamic experiences, allowing presenters to engage with their audience in real-time without the constraints of traditional video streaming. As the presenter navigates through the presentation, the audience's documents automatically synchronize, ensuring a smooth and interactive viewing experience for everyone involved.
+        </p>
+        <p class="about__paragraph">
+            Join the Huddle community today and discover a new way to share ideas, collaborate, and connect with others. Whether you're hosting a meeting, delivering a lecture, or conducting a workshop, Huddle empowers you to captivate your audience and make a lasting impact. Welcome to a world where presentations are transformed, connections are strengthened, and ideas spark to life.
+        </p>
+    </div>
+
+{%- endblock about %}

@@ -1,0 +1,145 @@
+{% extends 'layout.html' %}
+
+{% block component_style -%}
+    <link rel="stylesheet" href="{{ url_for('room.static', filename='room.css') }}">
+{%- endblock component_style %}
+
+<!-- {# scripts #} -->
+{% block component_script -%}
+    <script src="{{ url_for( 'room.static' , filename='room.js') }}" type="module"></script>
+    <script src="{{ url_for( 'room.static' , filename='reminders.js') }}" type="module"></script>
+    <script src="{{ url_for( 'room.static' , filename='info_toggle.js') }}" type="module"></script>
+    <script src="{{ url_for( 'room.static' , filename='portrait_chat_toggle.js') }}" type="module"></script>
+    <script src="{{ url_for( 'room.static' , filename='files_manager.js') }}" type="module"></script>
+{%- endblock component_script %}
+
+<!-- {# main #} -->
+{% block rooms -%}
+
+    {% include 'create_room_form.html' %}
+
+    <div id="main-content-rooms">
+
+        <!-- {# show this tab only if user is authenticated #} -->
+        {% if current_user.is_authenticated -%}
+
+            <div id="main-content-rooms-list">
+                <button id="main-content-rooms-list-create">Create</button>
+                <div id="main-content-rooms-list-items">
+                    {% for room in user_rooms|reverse -%}
+                        <form action="{{ url_for('room.open_room', room_code=room.code) }}" class="main-content-rooms-list__item" data-code="{{ room.code }}">
+                            <button type="submit">
+                                <p class="main-content-rooms-list__item__title">{{ room.title }}</p>
+                                <p class="main-content-rooms-list__item__description">{{ room.description }}</p>
+                            </button>
+                        </form>
+                    {%- endfor %}
+                </div>
+            </div>
+
+            <div id="main-content-rooms-chat" data-code="{{ room.code }}">
+                <div id="main-content-rooms-chat-top">
+                    <div id="main-content-rooms-chat-top-left">
+                        <p id="main-content-rooms-chat-top-left-title">{{ room.title }}</p>
+                        <p id="main-content-rooms-chat-top-left-description">{{ room.description }}</p>
+                    </div>
+                    <div id="main-content-rooms-chat-top-right">
+                        <form action="{{ url_for('room.leave', room_code=room.code) }}" method="post">
+                            <button id="main-content-rooms-chat-top-right-leave">Leave</button>
+                        </form>
+
+                        <svg class="icon" id="people" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path d="M8.49578666,8 C9.32421378,8 9.99578666,8.67157288 9.99578666,9.5 L9.99500413,10.2483651 C10.0978758,12.0849239 8.68333886,13.0008101 6.06019361,13.0008101 C3.44551926,13.0008101 2,12.0969079 2,10.2745741 L2,9.5 C2,8.67157288 2.67157288,8 3.5,8 L8.49578666,8 Z M12.4963886,8 C13.3248157,8 13.9963886,8.67157288 13.9963886,9.5 L13.9956373,10.0265728 C14.0860521,11.6740351 12.8361745,12.5 10.5515945,12.5 C10.2414712,12.5 9.94992668,12.4848914 9.67765519,12.4546597 C10.2143644,11.9590361 10.5014697,11.2864584 10.5004904,10.4365689 L10.4942216,10.2204023 L10.4957867,9.5 C10.4957867,8.90242987 10.2337129,8.36607035 9.81823197,7.99958804 L12.4963886,8 Z M6,2 C7.38093559,2 8.50040506,3.11946948 8.50040506,4.50040506 C8.50040506,5.88134065 7.38093559,7.00081013 6,7.00081013 C4.61906441,7.00081013 3.49959494,5.88134065 3.49959494,4.50040506 C3.49959494,3.11946948 4.61906441,2 6,2 Z M11,3 C12.1045695,3 13,3.8954305 13,5 C13,6.1045695 12.1045695,7 11,7 C9.8954305,7 9,6.1045695 9,5 C9,3.8954305 9.8954305,3 11,3 Z"></path></svg>
+                        <svg class="icon" id="info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g><g><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path><circle cx="12" cy="8" r="1"></circle><path d="M12 10a1 1 0 0 0-1 1v5a1 1 0 0 0 2 0v-5a1 1 0 0 0-1-1z"></path></g></g></svg>
+                        <svg class="icon" id="call" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.44,13c-.22,0-.45-.07-.67-.12a9.44,9.44,0,0,1-1.31-.39,2,2,0,0,0-2.48,1l-.22.45a12.18,12.18,0,0,1-2.66-2,12.18,12.18,0,0,1-2-2.66L10.52,9a2,2,0,0,0,1-2.48,10.33,10.33,0,0,1-.39-1.31c-.05-.22-.09-.45-.12-.68a3,3,0,0,0-3-2.49h-3a3,3,0,0,0-3,3.41A19,19,0,0,0,18.53,21.91l.38,0a3,3,0,0,0,2-.76,3,3,0,0,0,1-2.25v-3A3,3,0,0,0,19.44,13Zm.5,6a1,1,0,0,1-.34.75,1.06,1.06,0,0,1-.82.25A17,17,0,0,1,4.07,5.22a1.09,1.09,0,0,1,.25-.82,1,1,0,0,1,.75-.34h3a1,1,0,0,1,1,.79q.06.41.15.81a11.12,11.12,0,0,0,.46,1.55l-1.4.65a1,1,0,0,0-.49,1.33,14.49,14.49,0,0,0,7,7,1,1,0,0,0,.76,0,1,1,0,0,0,.57-.52l.62-1.4a13.69,13.69,0,0,0,1.58.46q.4.09.81.15a1,1,0,0,1,.79,1Z"></path></svg>
+                        <svg class="icon" id="video-camera" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.53,7.15a1,1,0,0,0-1,0L17,8.89A3,3,0,0,0,14,6H5A3,3,0,0,0,2,9v6a3,3,0,0,0,3,3h9a3,3,0,0,0,3-2.89l3.56,1.78A1,1,0,0,0,21,17a1,1,0,0,0,.53-.15A1,1,0,0,0,22,16V8A1,1,0,0,0,21.53,7.15ZM15,15a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V9A1,1,0,0,1,5,8h9a1,1,0,0,1,1,1Zm5-.62-3-1.5V11.12l3-1.5Z"></path></svg>
+
+                        <p id="main-content-rooms-chat-top-right-call_toggle">Call</p>
+                        <p id="main-content-rooms-chat-top-right-video_call_toggle">Video Meeting</p>
+                        <p id="main-content-rooms-chat-top-right-info">Info</p>
+                    </div>
+                </div>
+                <div id="main-content-rooms-chat-center">
+                    <div id="main-content-rooms-chat-center-left">
+                        <input type="file" name="files" id="main-content-rooms-chat-center-left-files-input">
+                        <div id="main-content-rooms-chat-center-left-files">
+                            {% if room.files | length > 0 -%}
+                            <!-- {% for file in room.files -%}
+                                {%- endfor %} -->
+                            {%- else -%}
+                                <div id="main-content-rooms-chat-center-left-info">
+                                    <svg id="add-files-illustration" xmlns="http://www.w3.org/2000/svg" width="782.04441" height="701.88002" viewBox="0 0 782.04441 701.88002" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <path d="M609.48783,100.59015l-25.44631,6.56209L270.53735,187.9987,245.091,194.56079A48.17927,48.17927,0,0,0,210.508,253.17865L320.849,681.05606a48.17924,48.17924,0,0,0,58.61776,34.58317l.06572-.01695,364.26536-93.93675.06572-.01695a48.17923,48.17923,0,0,0,34.58309-58.6178l-110.341-427.87741A48.17928,48.17928,0,0,0,609.48783,100.59015Z" transform="translate(-208.9778 -99.05999)" fill="#f2f2f2"/>
+                                        <path d="M612.94784,114.00532l-30.13945,7.77236L278.68955,200.20385l-30.139,7.77223a34.30949,34.30949,0,0,0-24.6275,41.74308l110.341,427.87741a34.30946,34.30946,0,0,0,41.7431,24.62736l.06572-.01695,364.26536-93.93674.06619-.01707a34.30935,34.30935,0,0,0,24.627-41.7429l-110.341-427.87741A34.30938,34.30938,0,0,0,612.94784,114.00532Z" transform="translate(-208.9778 -99.05999)" fill="#fff"/>
+                                        <path d="M590.19,252.56327,405.917,300.08359a8.01411,8.01411,0,0,1-4.00241-15.52046l184.273-47.52033A8.01412,8.01412,0,0,1,590.19,252.56327Z" transform="translate(-208.9778 -99.05999)" fill="#f2f2f2"/>
+                                        <path d="M628.955,270.49906,412.671,326.27437a8.01411,8.01411,0,1,1-4.00241-15.52046l216.284-55.77531a8.01411,8.01411,0,0,1,4.00242,15.52046Z" transform="translate(-208.9778 -99.05999)" fill="#f2f2f2"/>
+                                        <path d="M620.45825,369.93676l-184.273,47.52032a8.01411,8.01411,0,1,1-4.00242-15.52046l184.273-47.52032a8.01411,8.01411,0,1,1,4.00241,15.52046Z" transform="translate(-208.9778 -99.05999)" fill="#f2f2f2"/>
+                                        <path d="M659.22329,387.87255l-216.284,55.77531a8.01411,8.01411,0,1,1-4.00242-15.52046l216.284-55.77531a8.01411,8.01411,0,0,1,4.00242,15.52046Z" transform="translate(-208.9778 -99.05999)" fill="#f2f2f2"/>
+                                        <path d="M650.72653,487.31025l-184.273,47.52033a8.01412,8.01412,0,0,1-4.00242-15.52047l184.273-47.52032a8.01411,8.01411,0,0,1,4.00242,15.52046Z" transform="translate(-208.9778 -99.05999)" fill="#f2f2f2"/>
+                                        <path d="M689.49156,505.246l-216.284,55.77532a8.01412,8.01412,0,1,1-4.00241-15.52047l216.284-55.77531a8.01411,8.01411,0,0,1,4.00242,15.52046Z" transform="translate(-208.9778 -99.05999)" fill="#f2f2f2"/>
+                                        <path d="M374.45884,348.80871l-65.21246,16.817a3.847,3.847,0,0,1-4.68062-2.76146L289.5963,304.81607a3.847,3.847,0,0,1,2.76145-4.68061l65.21247-16.817a3.847,3.847,0,0,1,4.68061,2.76145l14.96947,58.04817A3.847,3.847,0,0,1,374.45884,348.80871Z" transform="translate(-208.9778 -99.05999)" fill="#e6e6e6"/>
+                                        <path d="M404.72712,466.1822l-65.21247,16.817a3.847,3.847,0,0,1-4.68062-2.76146l-14.96946-58.04816A3.847,3.847,0,0,1,322.626,417.509l65.21246-16.817a3.847,3.847,0,0,1,4.68062,2.76145l14.96946,58.04817A3.847,3.847,0,0,1,404.72712,466.1822Z" transform="translate(-208.9778 -99.05999)" fill="#e6e6e6"/>
+                                        <path d="M434.99539,583.55569l-65.21246,16.817a3.847,3.847,0,0,1-4.68062-2.76145l-14.96946-58.04817a3.847,3.847,0,0,1,2.76145-4.68062l65.21247-16.817a3.847,3.847,0,0,1,4.68061,2.76146l14.96947,58.04816A3.847,3.847,0,0,1,434.99539,583.55569Z" transform="translate(-208.9778 -99.05999)" fill="#e6e6e6"/>
+                                        <path d="M863.63647,209.0517H487.31811a48.17928,48.17928,0,0,0-48.125,48.12512V699.05261a48.17924,48.17924,0,0,0,48.125,48.12507H863.63647a48.17924,48.17924,0,0,0,48.125-48.12507V257.17682A48.17928,48.17928,0,0,0,863.63647,209.0517Z" transform="translate(-208.9778 -99.05999)" fill="#e6e6e6"/>
+                                        <path d="M863.637,222.90589H487.31811a34.30948,34.30948,0,0,0-34.271,34.27093V699.05261a34.30947,34.30947,0,0,0,34.271,34.27088H863.637a34.30936,34.30936,0,0,0,34.27051-34.27088V257.17682A34.30937,34.30937,0,0,0,863.637,222.90589Z" transform="translate(-208.9778 -99.05999)" fill="#fff"/>
+                                        <circle cx="694.19401" cy="614.02963" r="87.85039"/>
+                                        <path d="M945.18722,701.63087H914.63056V671.07421a11.45875,11.45875,0,0,0-22.9175,0v30.55666H861.1564a11.45875,11.45875,0,0,0,0,22.9175h30.55666V755.105a11.45875,11.45875,0,1,0,22.9175,0V724.54837h30.55666a11.45875,11.45875,0,0,0,0-22.9175Z" transform="translate(-208.9778 -99.05999)" fill="#fff"/>
+                                        <path d="M807.00068,465.71551H616.699a8.01412,8.01412,0,1,1,0-16.02823H807.00068a8.01412,8.01412,0,0,1,0,16.02823Z" transform="translate(-208.9778 -99.05999)" fill="#e6e6e6"/>
+                                        <path d="M840.05889,492.76314H616.699a8.01412,8.01412,0,1,1,0-16.02823H840.05889a8.01411,8.01411,0,1,1,0,16.02823Z" transform="translate(-208.9778 -99.05999)" fill="#e6e6e6"/>
+                                        <path d="M807.00068,586.929H616.699a8.01412,8.01412,0,1,1,0-16.02823H807.00068a8.01411,8.01411,0,0,1,0,16.02823Z" transform="translate(-208.9778 -99.05999)" fill="#e6e6e6"/>
+                                        <path d="M840.05889,613.97661H616.699a8.01412,8.01412,0,1,1,0-16.02823H840.05889a8.01412,8.01412,0,1,1,0,16.02823Z" transform="translate(-208.9778 -99.05999)" fill="#e6e6e6"/>
+                                        <path d="M574.07028,505.04162H506.72434a3.847,3.847,0,0,1-3.84278-3.84278V441.25158a3.847,3.847,0,0,1,3.84278-3.84278h67.34594a3.847,3.847,0,0,1,3.84278,3.84278v59.94726A3.847,3.847,0,0,1,574.07028,505.04162Z" transform="translate(-208.9778 -99.05999)" fill="#e6e6e6"/>
+                                        <path d="M574.07028,626.25509H506.72434a3.847,3.847,0,0,1-3.84278-3.84278V562.46505a3.847,3.847,0,0,1,3.84278-3.84278h67.34594a3.847,3.847,0,0,1,3.84278,3.84278v59.94726A3.847,3.847,0,0,1,574.07028,626.25509Z" transform="translate(-208.9778 -99.05999)" fill="#e6e6e6"/>
+                                        <path d="M807.21185,330.781H666.91017a8.01411,8.01411,0,0,1,0-16.02823H807.21185a8.01411,8.01411,0,0,1,0,16.02823Z" transform="translate(-208.9778 -99.05999)" fill="#ccc"/>
+                                        <path d="M840.27007,357.82862H666.91017a8.01411,8.01411,0,1,1,0-16.02822h173.3599a8.01411,8.01411,0,0,1,0,16.02822Z" transform="translate(-208.9778 -99.05999)" fill="#ccc"/>
+                                        <path d="M635.85911,390.6071H506.51316a3.847,3.847,0,0,1-3.84277-3.84277V285.81706a3.847,3.847,0,0,1,3.84277-3.84277H635.85911a3.847,3.847,0,0,1,3.84277,3.84277V386.76433A3.847,3.847,0,0,1,635.85911,390.6071Z" transform="translate(-208.9778 -99.05999)"/>
+                                    </svg>
+                                    <p id="main-content-rooms-chat-center-left-info-message">Drop or click here to upload files</p>
+                                </div>
+                                <button id="main-content-rooms-chat-center-left-files-upload">Upload</button>
+                            {%- endif %}
+                        </div>
+                    </div>
+                    <ul id="main-content-rooms-chat-center-right">
+                        {% for alert in room.announcements -%}
+                            <li>{{ alert.text | safe }}</li>
+                        {%- endfor %}
+                    </ul>
+                </div>
+                <div id="main-content-rooms-chat-bottom">
+                    <div id="main-content-rooms-chat-bottom-right">
+                        <svg class="icon-active" id="emoji" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="#212121" d="M8,2 C11.3137,2 14,4.68629 14,8 C14,11.3137 11.3137,14 8,14 C4.68629,14 2,11.3137 2,8 C2,4.68629 4.68629,2 8,2 Z M8,3 C5.23858,3 3,5.23858 3,8 C3,10.7614 5.23858,13 8,13 C10.7614,13 13,10.7614 13,8 C13,5.23858 10.7614,3 8,3 Z M9.86353,9.66654 C10.0477,9.46078 10.3638,9.44327 10.5696,9.62743 C10.7753,9.8116 10.7928,10.1277 10.6087,10.3335 C9.96851,11.0487 9.03663,11.4999949 8,11.4999949 C6.96337,11.4999949 6.03148,11.0487 5.39132,10.3335 C5.20716,10.1277 5.22467,9.8116 5.43043,9.62743 C5.6362,9.44327 5.95229,9.46078 6.13646,9.66654 C6.59494,10.1788 7.25963,10.4999949 8,10.4999949 C8.74037,10.4999949 9.40505,10.1788 9.86353,9.66654 Z M6.25,6.25 C6.66421,6.25 7,6.58579 7,7 C7,7.41421 6.66421,7.75 6.25,7.75 C5.83579,7.75 5.5,7.41421 5.5,7 C5.5,6.58579 5.83579,6.25 6.25,6.25 Z M9.75,6.25 C10.1642,6.25 10.5,6.58579 10.5,7 C10.5,7.41421 10.1642,7.75 9.75,7.75 C9.33579,7.75 9,7.41421 9,7 C9,6.58579 9.33579,6.25 9.75,6.25 Z"></path></svg>
+                        <ul id="main-content-rooms-chat-bottom-right-alerts" data-room-code="{{ room.code }}">
+                            <li><strong>Attention Everyone!</strong> The meeting will start very soon. Please make sure you are prepared and ready to join.</li>
+                            <li><strong>Reminder: Meeting Starting Soon!</strong> Everyone is advised to prepare for the meeting. Make sure you have all necessary materials and are ready to participate.</li>
+                            <li><strong>Meeting Alert!</strong> The meeting is about to begin shortly. Please get ready and ensure you are prepared for the discussion.</li>
+                            <li><strong>Time to Prepare!</strong> Our meeting will commence shortly. Please prepare yourself and join on time.</li>
+                            <li><strong>Heads Up!</strong> The meeting will start very soon. Kindly make all necessary preparations and be ready to contribute.</li>
+                        </ul>
+                        <button id="main-content-rooms-chat-bottom-right-reminder">Reminders</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="main-content-rooms-chat_info">
+                <button id="main-content-rooms-chat_info-top-members-close">Back</button>
+                <div id="main-content-rooms-chat_info-top">
+                    <p id="main-content-rooms-chat_info-top-title">{{ room.title }}</p>
+                    <p id="main-content-rooms-chat_info-top-description">{{ room.description }}</p>
+                </div>
+                <ul id="main-content-rooms-chat_info-top-members">
+                    <p id="main-content-rooms-chat_info-top-members-title">Members</p>
+                    {% for user_room_member in room.members -%}
+                        {% if room.admin.id == user_room_member.user.id -%}
+                            <li class="main-content-rooms-chat_info-top-members__item">{{ user_room_member.user.username }} (Admin)</li>
+                        {%- else -%}
+                            <li class="main-content-rooms-chat_info-top-members__item">{{ user_room_member.user.username }}</li>
+                        {%- endif %}
+                    {%- endfor %}
+                </ul>
+            </div>
+
+        {%- endif %}
+
+    </div>
+
+{%- endblock rooms %}

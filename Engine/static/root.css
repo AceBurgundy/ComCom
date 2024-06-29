@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+:root.night {
+    --text: #f1f8fe;
+    --background: #020b13;
+    --input-background: #0d1f2e;
+    --form-background: #020b1394;
+    --primary: #f09b56;
+    --secondary:#041c2f;
+    --accent: #ce6712;
+    --dim-accent: #7b4010;
+    --iconFill: #f1f8fe;
+}
+
+:root {
+    --text: black;
+    --background: #ffffff;
+    --input-background: #fff1e5;
+    --primary: #f09b56;
+    --secondary:#041c2f;
+    --dim-accent: #7b4010;
+    --iconFill: black;
+}
+
+* {
+    font-size: 15px;
+    outline: 0px !important;
+    padding: 0px;
+    margin: 0px;
+    text-decoration: none;
+    font-family: "Consolas", sans-serif;
+    box-sizing: border-box;
+    color: var(--text);
+}
+
+button, .button {
+    padding: calc(0.3rem + 0.4vw);
+    border: none;
+    width: fit-content;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: var(--primary);
+    color: black;
+}
+
+body {
+    background-color: var(--background);
+}
+
+path {
+    pointer-events: none;
+}
+
+svg {
+    background-color: inherit;
+}
+
+.small {
+    font-size: 12px;
+}
+
+#app-name {
+    color: var(--accent);
+    font-size: 1.5vw;
+}
+
+.hidden {
+    display: none;
+}
+
+#form-background{
+    position: fixed;
+    width: 100dvw;
+    height: 100dvh;
+    transform: translateY(-100%);
+    background-color: var(--form-background);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    z-index: 2;
+    opacity: 0;
+}
+
+#form-background.active {
+    transform: translateY(0%);
+    opacity: 1;
+}
+
+@media screen and (orientation: portrait) {
+    #app-name {
+        font-size: 1rem;
+    }
+}

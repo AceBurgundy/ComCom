@@ -1,0 +1,471 @@
+@import "/static/root.css";
+
+#grid-container {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/*----------------+
+|   Top Content   |
++-----------------*/
+
+/*---------------+--------------+
+| |_____________________|       |
+|                               |
+|                               |
+|                               |
+|                               |
+|                               |
++----------------+--------------*/
+
+#top-bar {
+    grid-area: top-bar;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem;
+    border-bottom: 1px solid var(--accent);
+}
+
+#top-bar > div {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 2rem;
+}
+
+#top-bar > div > * {
+    cursor: pointer;
+    transition: 200ms ease;
+}
+
+.icon {
+    width: 1rem;
+    display: none;
+}
+
+.icon-active {
+    width: 1rem;
+}
+
+#sun-off {
+    fill: var(--text);
+}
+
+#night-toggle:hover, #logout:hover {
+    color: var(--accent);
+}
+
+#notification-group {
+    position: relative;
+}
+
+#notification-list-close {
+    display: none;
+}
+
+#notification-list {
+    display: none;
+    position: absolute;
+    left: 0%;
+    top: 170%;
+    list-style: none;
+    height: 500px;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow: scroll;
+    padding: 0.5rem 0;
+    z-index: 999;
+}
+
+#notification-list.active {
+    display: flex;
+}
+
+.notification-list__item {
+    width: 300px;
+    padding: 0.5rem;
+    display: flex;
+    background-color: var(--background);
+    border: 1px solid var(--accent);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+}
+
+#notification-icon {
+    margin-left: 2em;
+    width: 1rem;
+    background-color: inherit;
+}
+
+.dashboard-profile-picture {
+    height: 3rem;
+    width: 3rem;
+    cursor: pointer;
+    clip-path: circle();
+    object-fit: cover;
+}
+
+/*-----------------+
+|   Main Content   |
++------------------*/
+
+/*---------------+---------------+
+|________________________________|
+|                                |
+|                                |
+|              here              |
+|                                |
+|                                |
++---------------+----------------*/
+
+#main-content {
+    position: relative;
+    align-items: flex-start;
+    height: 100%;
+}
+
+.room-buttons__button {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin: 1rem;
+}
+
+.room-buttons__button > p {
+    color: inherit;
+}
+
+/* For room options */
+
+#room-options {
+	display: flex;
+	position: absolute;
+	gap: 1rem;
+	top: 50%;
+	left: 50%;
+	transform: translate(-60%, -50%);
+}
+
+#room-options-join-input {
+    padding: calc(.5rem + .3vw);
+    background-color: var(--input-background);
+    color: inherit;
+    border: none;
+    border-radius: 5px;
+}
+
+/* For posts */
+
+#room-posts {
+    width: 100%;
+    padding: 1rem 0;
+    /* padding: calc(0.5rem + 0.5vw) 0; */
+}
+
+#room-posts > h1 {
+    font-size: 2rem;
+    margin: 2rem;
+}
+
+#room-posts > p {
+    margin: 1rem;
+}
+
+.room-post > * {
+    pointer-events: none;
+}
+
+#create-room {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 200%);
+    border: 1px solid var(--accent);
+    background-color: var(--background);
+    width: 550px;
+    max-width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1rem;
+    padding: calc(.5rem + .5vw);
+    z-index: 3;
+    opacity: 0;
+
+    transition: 150ms;
+}
+
+#create-room.active {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+#create-room > * {
+    width: 100%;
+}
+
+#create-room__options {
+    display: flex;
+    justify-content: space-between;
+}
+
+#create-room__form-name {
+    cursor: default;
+}
+
+#create-room__close-box {
+    width: fit-content;
+    height: fit-content;
+}
+
+#create-room-close {
+    cursor: pointer;
+}
+
+.create-room__input-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#create-room__title {
+    padding: calc(.5rem + .3vw);
+    background-color: var(--input-background);
+    color: inherit;
+    border: none;
+}
+
+#create-room__body {
+    resize: none;
+    padding: calc(.5rem + .3vw);
+    background-color: var(--input-background);
+    color: inherit;
+    border: none;
+}
+
+#create-room__submit > p{
+    color: inherit;
+}
+
+#create-room__bottom {
+    display: flex;
+    justify-content: space-between;
+}
+
+input[type=file] {
+    width: 80%;
+    color: black;
+}
+
+input[type=file]::file-selector-button {
+    margin-right: 20px;
+    border: none;
+    background: var(--primary);
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+}
+
+#create-room__bottom-image {
+    background: var(--primary);
+    border-radius: 10px;
+    margin-top: 0.5rem;
+}
+
+/* room posts */
+.room-post {
+    background-color: var(--input-background);
+    padding: calc(.5vw + .5rem);
+    margin: 0 auto;
+    margin-bottom: calc(.5rem + .5vh);
+}
+
+.room-post > * {
+    background-color: inherit;
+}
+
+.room-post, .room-post__data {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.room-post__data {
+    cursor: pointer;
+}
+
+.room-post__data:hover > .room-post__title {
+    color: var(--accent);
+}
+
+.room-details {
+    font-size: 0.8rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.room-post__title {
+    font-size: 1.3rem;
+    transition: 250ms;
+    background-color: inherit;
+}
+
+.room-content {
+    pointer-events: none;
+    cursor: default;
+}
+
+.room-post__buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.room-post__buttons-like {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+
+#thumbs-up-filled,
+#thumbs-up-unfilled {
+    width: 2.5rem;
+    height: fit-content;
+    background-color: white;
+    border-radius: 50%;
+    padding: 0.5rem;
+    pointer-events: none;
+}
+
+.likes {
+    margin-right: 0.5rem;
+}
+
+.room-post__button {
+    border: none;
+    cursor: pointer;
+    transition: 250ms;
+    background-color: inherit;
+    display: flex;
+    align-items: center;
+}
+
+.room-post__button:hover {
+    color: var(--accent)
+}
+
+@media screen and (orientation: portrait) {
+    #grid-container {
+        width: 100%;
+    }
+    #top-bar {
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+    #notification-toggle,
+    #night-toggle {
+        display: none;
+    }
+    #notification-icon,
+    #sun {
+        display: block;
+    }
+    #logout > p,
+    #about-section > p,
+    #room-buttons__create-button > p,
+    #create-room-close,
+    #create-room__submit > p {
+        display: none;
+    }
+    #notification-list-close {
+        display: block;
+        width: 95vw;
+        position: sticky;
+    }
+    #notification-list {
+        position: fixed;
+        left: 0%;
+        top: 0%;
+
+        width: 100vw;
+        height: 100dvh;
+        align-items: center;
+        border-bottom: 0;
+        background-color: var(--form-background);
+        backdrop-filter: blur(16px) saturate(180%);
+        z-index: 2;
+    }
+    .notification-list__item {
+        width: 95%;
+        padding: 0.5rem;
+    }
+    #room-options {
+        flex-direction: column;
+        gap: 0.5rem;
+        transform: translate(-50%, -50%);
+    }
+    #room-options-new {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+    }
+    #plus-icon {
+        margin-top: 3px;
+    }
+    #room-options-join {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    #room-buttons__create-button {
+        padding: 1rem;
+    }
+
+    #pencil-icon {
+        width: 1.5rem;
+    }
+    #logout-icon,
+    #pencil-icon,
+    #create-room-close-icon,
+    #plus-icon,
+    #info-icon {
+        display: block;
+    }
+
+    #info-icon circle:nth-child(2) {
+        stroke: var(--iconFill);
+    }
+
+    #info-icon polyline:nth-child(3) {
+        stroke: var(--iconFill);
+    }
+
+    #info-icon circle:nth-child(4) {
+        fill: var(--iconFill);
+    }
+
+    #logout-icon,
+    #create-room-close-icon {
+        fill: var(--iconFill);
+    }
+    #room-posts > h1 {
+        font-size: 1.5rem;
+        margin: 1rem;
+    }
+    #top-bar > div {
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+    .dashboard-profile-picture {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+}

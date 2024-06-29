@@ -1,0 +1,210 @@
+@import "/static/root.css";
+
+body {
+    background-color: var(--background);
+}
+
+svg {
+    height: fit-content;
+}
+
+#authentication {
+    width: 90%;
+    max-width: 400px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 1s;
+    font-size: 13px;
+    margin: 0 auto;
+}
+
+/*----------------------------+ 
+|     Form Header Message     |
++-----------------------------*/
+
+#authentication-header {
+    cursor: default;
+    font-size: 2.5vw;
+    margin-bottom: 7.0dvh;
+}
+
+@media screen and (orientation: portrait) {
+    #authentication-header {
+        font-size: 10vw;
+    }
+}
+
+/*----------------------------+ 
+|   Both Login and Register   |
++-----------------------------*/
+
+
+/*      The actual form       */
+.authentication-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+    transition: 500ms;
+}
+
+/*----------------------------+ 
+|           Inputs            |
++-----------------------------*/
+
+.input-field {
+    background-color: var(--text);
+    margin-bottom: 1em;
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    width: 100%;
+    height: 3rem;
+    min-height: 2rem;
+    margin-bottom: 15px;
+    border-radius: 15px;
+}
+
+input {
+    background-color: var(--text);
+    border: none;
+    color: #000;
+    font-size: 1rem;
+    opacity: 0.7;
+    transition: 300ms ease;
+}
+
+input:hover {
+    color: #000;
+    opacity: 1;
+}
+
+/*----------------------------+ 
+|            Icons            |
++-----------------------------*/
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: inherit;
+    border-radius: 10px;
+}
+
+.icons {
+    width: 1.2rem;
+    cursor: pointer;
+    background-color: inherit;
+    overflow: visible;
+}
+
+.lock-icon {
+    width: 1rem;
+}
+
+.email-icon {
+    width: 1.25rem;
+}
+
+
+/*    Icons inside the input    */
+
+input[type="password"] {
+    overflow: visible;
+}
+
+input::placeholder,
+svg,
+i {
+    opacity: 0.5;
+}
+
+.eye {
+    display: none;
+    width: 1rem;
+    cursor: pointer;
+    background-color: inherit;
+    overflow: visible;
+}
+
+.eye-off,
+.circle-icon {
+    width: 1rem;
+    background-color: inherit;
+}
+
+#user-arrow {
+    width: 1.2rem;
+    background-color: inherit;
+    transition: 500ms;
+    fill: var(--secondary);
+}
+
+.button:hover {
+    transform: translateX(5%);
+}
+
+
+/*----------------------------+ 
+|           Buttons           |
++-----------------------------*/
+
+.wrapper {
+    width: 100%;
+    margin-top: 7dvh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.button {
+    height: 4rem;
+    width: 4rem;
+    min-height: 2.5rem;
+    min-width: 2.5rem;
+    background-color: var(--primary);
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 200ms ease;
+}
+
+.form-tag {
+    cursor: default;
+    font-size: 1.1rem;
+    margin-left: 20px;
+}
+
+
+/*----------------------------+ 
+|  To Register and To Login   | 
++-----------------------------*/
+
+#to-register,
+#to-login {
+    position: absolute;
+    bottom: 2%;
+    cursor: pointer;
+    background-color: inherit;
+    border: none;
+}
+
+#to-register a,
+#to-login a {
+    color: black;
+}
+
+#to-login > *, #to-register > * {
+    font-size: 0.9rem;
+}
+
+#to-register:hover p,
+#to-login:hover p {
+    color: blue;
+}

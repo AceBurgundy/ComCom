@@ -1,0 +1,37 @@
+#about {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem;
+    margin: 0 auto;
+    width: 80%;
+}
+
+#about__title, #about__title > * {
+    font-size: 4vw;
+}
+
+#about__title > * {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+.about__paragraph {
+    text-align: justify;
+    font-size: 2rem;
+}
+
+@media screen and (orientation: portrait) {
+    #about {
+        padding: 1rem;
+        width: 95%;
+    }
+
+    #about__title, #about__title > *  {
+        font-size: 8vw;
+    }
+
+    .about__paragraph {
+        font-size: 1rem;
+    }
+}
