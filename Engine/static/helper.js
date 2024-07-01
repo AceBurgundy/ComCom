@@ -181,4 +181,4 @@ export const isCurrentUser = async userId => {
   const currentUserObject = await response.json();
 
   return currentUserObject.user_id === userId;
-}
+};

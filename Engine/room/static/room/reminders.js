@@ -11,7 +11,7 @@ const messageInput = element('#main-content-rooms-chat-bottom-right-input');
  * @param {Integer} messageObject.senderId - The id of the sender
  * @param {Integer} messageObject.senderUsername - The username of the sender
  * @param {String} messageObject.text - The content of the message
- * @returns {Promise<void>}
+ * @return {Promise<void>}
  */
 async function createMessage(messageObject) {
   const isSender = await isCurrentUser(messageObject.senderId);
@@ -33,14 +33,17 @@ async function createMessage(messageObject) {
         </td>
         <td class="main-content-room-chat-center__row__right"></td>
       </tr>`;
-    }
+  }
   ;
 
   chatList.innerHTML = chatList.innerHTML + newMessage;
   messageInput.value = '';
 };
 
-// Handles sending messages back to the server
+/**
+ * Handles sending messages back to the server
+ * @return {void}
+ */
 function sendMessage() {
   const message = messageInput.value.trim();
 
