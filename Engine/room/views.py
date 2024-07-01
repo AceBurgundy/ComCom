@@ -1,5 +1,5 @@
 from flask import Blueprint, Response as FlaskResponse, jsonify, redirect, render_template, request, session, url_for
-from Engine.models import Notification, Room, RoomAnnouncement, User, UserRoom
+from Engine.models import Notification, Room, RoomMessage, User, UserRoom
 from flask_login import current_user, login_required # type: ignore
 from werkzeug.wrappers.response import Response as WerkzeugResponse
 from flask_socketio import emit, join_room, leave_room, send # type: ignore
@@ -86,17 +86,17 @@ def on_join(data) -> None:
     # Update the session to the new room
     session['current_room_code'] = room_code
 
-@socket_io.on('new-alert')
-def new_alert(data) -> None:
+@socket_io.on('send-message')
+def send_message(data) -> None:
     """
-    Adds and broadcast new messages added to a room.
+    Adds and broadcast send messages added to a room.
     """
     message: Optional[str] = data.get('message', None)
     room_code: Optional[str] = data.get('roomCode', None)
 
     if message is None:
 
-        send('Alert is missing')
+        send('Message is missing')
         return
 
     room: Optional[Room] = Room.query.filter_by(code=room_code).first()
@@ -106,10 +106,14 @@ def new_alert(data) -> None:
         send('Room to send alert to is not found')
         return
 
-    room_annoncement: RoomAnnouncement = RoomAnnouncement(message, room.id)
-    emit('alert', message, to=room.code)
+    room_message: RoomMessage = RoomMessage(message, room.id, current_user.id)
+    emit('received-message', {
+        'text': message,
+        'senderId': current_user.id,
+        'senderUsername': current_user.username
+    }, to=room.code)
 
-    db.session.add(room_annoncement)
+    db.session.add(room_message)
     db.session.commit()
 
 @room.get("/rooms")
