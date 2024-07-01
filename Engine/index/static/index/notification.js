@@ -129,7 +129,7 @@ triggerWhenElementExist('#notification-list', 'click', event => {
                 if (onRoomsPage) {
                   window.location.href = response.redirect_link;
                 } else {
-                  makeToastNotification(`Open 'huddle' icon to go back to your rooms`);
+                  makeToastNotification(`Open 'comcom' icon to go back to your rooms`);
                 }
               }
             } else {
