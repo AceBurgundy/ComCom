@@ -47,6 +47,7 @@ class User(BaseModel, UserMixin):
     night_mode = db.Column(db.Boolean(), nullable=False, default=True)
 
     rooms = db.relationship('UserRoom', back_populates='user')
+    messages = db.relationship('RoomMessage', back_populates='sender')
 
     sent_notifications = db.relationship('Notification', foreign_keys='Notification.sender_id', backref='sender', lazy=True, cascade="all, delete-orphan")
     received_notifications = db.relationship('Notification', foreign_keys='Notification.receiver_id', backref='receiver', lazy=True, cascade="all, delete-orphan")
@@ -112,7 +113,7 @@ class Room(BaseModel):
     members = db.relationship('UserRoom', back_populates='room')
     notifications = db.relationship('Notification', backref='room', lazy=True, cascade="all, delete-orphan")
 
-    announcements = db.relationship('RoomAnnouncement', backref='room', lazy=True, passive_deletes=True)
+    messages = db.relationship('RoomMessage', backref='room', lazy=True, passive_deletes=True)
     files = db.relationship('File', backref='room', lazy=True, cascade="all, delete-orphan")
 
     def __init__(self, code: str, title: str, description: str, admin: User) -> None:
@@ -134,19 +135,23 @@ class Room(BaseModel):
         """
         return prettify(self.__dict__, self.__tablename__)
 
-class RoomAnnouncement(BaseModel, UserMixin):
+class RoomMessage(BaseModel, UserMixin):
 
-    __tablename__ = 'room_announcement'
+    __tablename__ = 'room_message'
 
     text = db.Column(db.Text)
     room_id = db.Column(db.Integer, db.ForeignKey('room.id', ondelete='CASCADE'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    def __init__(self, text, room_id) -> None:
+    sender = db.relationship('User', back_populates='messages')
+
+    def __init__(self, text, room_id, user_id) -> None:
         """
         A new constructor that provides data to the attributes initially.
         """
         self.text = text
         self.room_id = room_id
+        self.user_id = user_id
 
     def __repr__(self) -> str:
         """
