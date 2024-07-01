@@ -1,6 +1,6 @@
-# Huddle: Light communication. Fast communication, Clear communication
+# Comcom: Chat with ease
 
-Welcome to the Huddle repository! Before you can start using the app, please follow these instructions carefully.
+Welcome to the Comcom repository! Before you can start using the app, please follow these instructions carefully.
 
 ## Prerequisites
 - Make sure you have the latest version of Python installed on your system.
@@ -11,16 +11,16 @@ Welcome to the Huddle repository! Before you can start using the app, please fol
 2. Open a terminal or command prompt and navigate to the project's root directory.
 
    ```shell
-   cd path/to/Huddle
+   cd path/to/Comcom
 
 3. Install the required libraries from the requirements.txt file using pip:
 
    ```shell
    pip install -r requirements.txt
-    
+
 ### Database Setup
 To set up the database for the app, run the following command:
-    
+
     python create_database.py
 
 ### Running the App
