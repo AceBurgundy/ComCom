@@ -174,3 +174,11 @@ export const isLoggedIn = async () => {
     console.error(error);
   }
 };
+
+// Function to check if the given user ID is the current user
+export const isCurrentUser = async userId => {
+  const response = await fetch('/current_user_id');
+  const currentUserObject = await response.json();
+
+  return currentUserObject.user_id === userId;
+}
