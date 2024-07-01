@@ -1,10 +1,15 @@
 @import "/static/root.css";
 
 #grid-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 10% 1fr;
+    grid-template-areas:
+        "top top top"
+        "main main main";
+    grid-template-columns: 1fr;
     height: 100dvh;
-    width: 100%;
+    width: 100dvw;
+    overflow: hidden;
     margin: 0 auto;
 }
 
@@ -22,7 +27,7 @@
 +----------------+--------------*/
 
 #top-bar {
-    grid-area: top-bar;
+    grid-area: top;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -125,6 +130,7 @@
 +---------------+----------------*/
 
 #main-content {
+    grid-area: main;
     position: relative;
     align-items: flex-start;
     height: 100%;
