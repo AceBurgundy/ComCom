@@ -1,6 +1,6 @@
-# Comcom: Chat with ease
+# ComCom: Chat with ease
 
-Welcome to the Comcom repository! Before you can start using the app, please follow these instructions carefully.
+Welcome to the ComCom repository! Before you can start using the app, please follow these instructions carefully.
 
 ## Prerequisites
 - Make sure you have the latest version of Python installed on your system.
@@ -11,7 +11,7 @@ Welcome to the Comcom repository! Before you can start using the app, please fol
 2. Open a terminal or command prompt and navigate to the project's root directory.
 
    ```shell
-   cd path/to/Comcom
+   cd path/to/ComCom
 
 3. Install the required libraries from the requirements.txt file using pip:
 
