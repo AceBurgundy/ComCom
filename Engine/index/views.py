@@ -3,7 +3,7 @@ from werkzeug.wrappers.response import Response as WerkzeugResponse
 from flask_login import current_user, login_required # type: ignore
 from Engine.room.forms import CreateRoomForm, JoinRoomForm
 from Engine.models import Room, UserRoom
-from typing import Dict, List
+from typing import Dict, List, Optional
 from flask import jsonify
 from flask import request
 from Engine import db
@@ -48,6 +48,13 @@ def set_current_mode() -> FlaskResponse:
     return jsonify({
         "status": True
     })
+
+@index.route('/current_user_id')
+def get_current_user_id() -> WerkzeugResponse:
+    """
+    Returns the current users id if logged in else None
+    """
+    return jsonify({'user_id': current_user.id if current_user.is_authenticated else None})
 
 @index.get("/")
 @login_required
