@@ -8,13 +8,13 @@
   "devDependencies": {
     "eslint": "^8.34.0",
     "eslint-config-google": "^0.14.0",
-    "eslint-plugin-prettier": "^5.1.3",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
     "prettier": "^3.3.1"
   },
   "eslintConfig": {
     "extends": [
-      "google"
+      "airbnb"
     ],
     "env": {
       "browser": true,
@@ -26,5 +26,8 @@
     }
   },
   "author": "https://github.com/AceBurgundy",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "comcom": "file:"
+  }
 }
